@@ -1,0 +1,131 @@
+import { useState } from 'react';
+
+const BULK_URL = 'https://prince-urban-knot-backend.onrender.com/api/products/bulk';
+
+function parseCSV(text) {
+  const lines = text.trim().split('\n');
+  const headers = lines[0].split(',').map(h => h.trim());
+
+  return lines.slice(1).map(line => {
+    // Handle commas inside quoted fields (e.g. "description, with comma")
+    const values = line.match(/(".*?"|[^,]+)(?=,|$)/g).map(v => v.replace(/^"|"$/g, '').trim());
+
+    const obj = {};
+    headers.forEach((header, i) => {
+      obj[header] = values[i];
+    });
+
+    return {
+      name: obj.name,
+      description: obj.description,
+      price: parseFloat(obj.price),
+      imageUrl: obj.imageUrl,
+      category: obj.category,
+      stock: parseInt(obj.stock)
+    };
+  });
+}
+
+function AdminBulkUpload() {
+  const [file, setFile] = useState(null);
+  const [preview, setPreview] = useState([]);
+  const [message, setMessage] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const handleFileChange = (e) => {
+    const selected = e.target.files[0];
+    setFile(selected);
+    setMessage(null);
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      try {
+        const parsed = parseCSV(event.target.result);
+        setPreview(parsed);
+      } catch (err) {
+        setMessage({ type: 'error', text: 'Failed to parse CSV. Check format.' });
+        setPreview([]);
+      }
+    };
+    reader.readAsText(selected);
+  };
+
+  const handleUpload = async () => {
+    if (preview.length === 0) return;
+    setLoading(true);
+    setMessage(null);
+
+    const token = localStorage.getItem('token');
+
+    try {
+      const response = await fetch(BULK_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(preview)
+      });
+
+      if (!response.ok) throw new Error('Upload failed');
+
+      setMessage({ type: 'success', text: `${preview.length} products added successfully!` });
+      setFile(null);
+      setPreview([]);
+    } catch (err) {
+      setMessage({ type: 'error', text: 'Failed to upload products.' });
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div style={{ maxWidth: '800px', margin: '4rem auto', padding: '2rem' }}>
+      <h2 style={{ marginBottom: '1rem' }}>Bulk Upload Products (CSV)</h2>
+      <p style={{ marginBottom: '1.5rem', color: '#888' }}>
+        CSV format: name,description,price,imageUrl,category,stock
+      </p>
+
+      <input type="file" accept=".csv" onChange={handleFileChange} />
+
+      {preview.length > 0 && (
+        <div style={{ marginTop: '2rem' }}>
+          <h4>Preview ({preview.length} products)</h4>
+          <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '1rem' }}>
+            <thead>
+              <tr>
+                <th style={{ textAlign: 'left', borderBottom: '1px solid #ccc', padding: '0.5rem' }}>Name</th>
+                <th style={{ textAlign: 'left', borderBottom: '1px solid #ccc', padding: '0.5rem' }}>Price</th>
+                <th style={{ textAlign: 'left', borderBottom: '1px solid #ccc', padding: '0.5rem' }}>Category</th>
+                <th style={{ textAlign: 'left', borderBottom: '1px solid #ccc', padding: '0.5rem' }}>Stock</th>
+              </tr>
+            </thead>
+            <tbody>
+              {preview.map((p, i) => (
+                <tr key={i}>
+                  <td style={{ padding: '0.5rem' }}>{p.name}</td>
+                  <td style={{ padding: '0.5rem' }}>${p.price}</td>
+                  <td style={{ padding: '0.5rem' }}>{p.category}</td>
+                  <td style={{ padding: '0.5rem' }}>{p.stock}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+          <button onClick={handleUpload} disabled={loading} style={{ marginTop: '1.5rem' }}>
+            {loading ? 'Uploading...' : `Upload ${preview.length} Products`}
+          </button>
+        </div>
+      )}
+
+      {message && (
+        <p style={{ color: message.type === 'success' ? 'green' : 'red', marginTop: '1rem' }}>
+          {message.text}
+        </p>
+      )}
+    </div>
+  );
+}
+
+export default AdminBulkUpload;
