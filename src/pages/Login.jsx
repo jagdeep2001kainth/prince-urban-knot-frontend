@@ -2,7 +2,21 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { loginUser } from "../services/api";
 import { useAuth } from "../AuthContext";
-
+const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    try {
+        const data = await loginUser(form);
+        if (data.token) {
+            login(data.token, { email: data.email, name: data.name, role: data.role }); // ← add role
+            navigate("/");
+        } else {
+            setError("Invalid email or password");
+        }
+    } catch (err) {
+        setError("Something went wrong. Please try again.");
+    }
+};
 const Login = () => {
     const [form, setForm] = useState({ email: "", password: "" });
     const [error, setError] = useState("");
