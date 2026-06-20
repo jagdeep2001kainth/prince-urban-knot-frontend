@@ -7,11 +7,6 @@ export const getProducts = async () => {
     const response = await fetch(`${API_URL}/products`);
     return response.json();
 };
-// adminbulkupload
-export const adminBulkUpload = async () => {
-    const response = await fetch(`${API_URL}//admin/bulk-upload`);
-    return response.json();
-}
 
 // Auth
 export const registerUser = async (data) => {
