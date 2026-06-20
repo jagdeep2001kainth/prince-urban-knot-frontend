@@ -24,9 +24,9 @@ function App() {
                 <Route path="/orders" element={
                     <PrivateRoute><Orders /></PrivateRoute>
                 } />
-                  {/* <Route path="/admin/bulk-upload" element={
+                  <Route path="/admin/bulk-upload" element={
                     <PrivateRoute><AdminBulkUpload /></PrivateRoute>
-                } /> */}
+                } />
                 <Route path="/admin/bulk-upload" element={
                     <AdminRoute><AdminBulkUpload /></AdminRoute>
                 } />
