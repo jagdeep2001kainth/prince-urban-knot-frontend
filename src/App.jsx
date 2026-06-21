@@ -8,6 +8,7 @@ import Orders from "./pages/Orders";
 import PrivateRoute from "./components/PrivateRoute";
 import AdminBulkUpload from "./pages/AdminBulkUpload";
 import AdminRoute from "./components/AdminRoute";
+import AdminBulkUploadV2 from "./pages/AdminBulkUploadV2";
 import "./App.css";
 
 function App() {
@@ -24,12 +25,15 @@ function App() {
                 <Route path="/orders" element={
                     <PrivateRoute><Orders /></PrivateRoute>
                 } />
+                <Route path="/admin/bulk-upload-v2" element={
+    <PrivateRoute><AdminBulkUploadV2 /></PrivateRoute>
+} />
                   {/* <Route path="/admin/bulk-upload" element={
                     <PrivateRoute><AdminBulkUpload /></PrivateRoute>
                 } /> */}
-                <Route path="/admin/bulk-upload" element={
+                {/* <Route path="/admin/bulk-upload" element={
                     <AdminRoute><AdminBulkUpload /></AdminRoute>
-                } />
+                } /> */}
                 
             </Routes>
         </div>
