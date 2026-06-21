@@ -4,11 +4,13 @@ const BULK_URL = 'https://prince-urban-knot-backend.onrender.com/api/products/bu
 
 function parseCSV(text) {
   const lines = text.trim().split('\n');
-  const headers = lines[0].split(',').map(h => h.trim());
+  const delimiter = lines[0].includes('\t') ? '\t' : ',';
+  const headers = lines[0].split(delimiter).map(h => h.trim());
 
   return lines.slice(1).map(line => {
-    // Handle commas inside quoted fields (e.g. "description, with comma")
-    const values = line.match(/(".*?"|[^,]+)(?=,|$)/g).map(v => v.replace(/^"|"$/g, '').trim());
+    const values = delimiter === '\t'
+      ? line.split('\t').map(v => v.replace(/^"|"$/g, '').trim())
+      : line.match(/(".*?"|[^,]+)(?=,|$)/g).map(v => v.replace(/^"|"$/g, '').trim());
 
     const obj = {};
     headers.forEach((header, i) => {
