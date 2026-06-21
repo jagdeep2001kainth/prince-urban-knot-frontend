@@ -25,9 +25,14 @@ function App() {
                 <Route path="/orders" element={
                     <PrivateRoute><Orders /></PrivateRoute>
                 } />
-                <Route path="/admin/bulk-upload-v2" element={
-    <PrivateRoute><AdminBulkUploadV2 /></PrivateRoute>
+                import AdminBulkUploadV3 from "./pages/AdminBulkUploadV3";
+...
+<Route path="/admin/bulk-upload-v3" element={
+    <PrivateRoute><AdminBulkUploadV3 /></PrivateRoute>
 } />
+                {/* <Route path="/admin/bulk-upload-v2" element={
+    <PrivateRoute><AdminBulkUploadV2 /></PrivateRoute>
+} /> */}
                   {/* <Route path="/admin/bulk-upload" element={
                     <PrivateRoute><AdminBulkUpload /></PrivateRoute>
                 } /> */}
