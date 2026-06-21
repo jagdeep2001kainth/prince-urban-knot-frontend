@@ -9,6 +9,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import AdminBulkUpload from "./pages/AdminBulkUpload";
 import AdminRoute from "./components/AdminRoute";
 import AdminBulkUploadV2 from "./pages/AdminBulkUploadV2";
+import AdminBulkUploadV3 from "./pages/AdminBulkUploadV3";
 import "./App.css";
 
 function App() {
