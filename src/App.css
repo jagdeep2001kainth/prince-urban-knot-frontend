@@ -614,7 +614,7 @@
     width: 100%;
 }
 
-.product-image-wrapper {
+/* .product-image-wrapper {
     width: 100%;
     overflow: hidden;
 }
@@ -624,4 +624,4 @@
     height: 280px;
     object-fit: cover;
     transition: opacity 0.3s ease;
-}
+} */
