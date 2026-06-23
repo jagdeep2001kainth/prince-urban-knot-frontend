@@ -614,14 +614,16 @@
     width: 100%;
 }
 
-/* .product-image-wrapper {
+.product-image-wrapper {
     width: 100%;
-    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #fff;
 }
 
 .product-image {
     width: 100%;
-    height: 280px;
-    object-fit: cover;
-    transition: opacity 0.3s ease;
-} */
+    height: auto;
+    display: block;
+}
