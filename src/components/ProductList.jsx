@@ -1,15 +1,27 @@
-import { useEffect, useState } from "react";
-import { getProducts } from "../services/api";
+import { useState } from "react";
 import { useCart } from "../context/CartContext";
 
-
 function ProductCard({ product }) {
-     const { addToCart } = useCart();
+    const { addToCart } = useCart();
+    const [hovered, setHovered] = useState(false);
+
+    const primaryImage = product.imageUrls?.[0] || product.imageUrl;
+    const secondaryImage = product.imageUrls?.[1] || primaryImage;
+
     return (
         <div className="product-card">
+            <div
+                className="product-image-wrapper"
+                onMouseEnter={() => setHovered(true)}
+                onMouseLeave={() => setHovered(false)}
+            >
+                <img
+                    className="product-image"
+                    src={hovered ? secondaryImage : primaryImage}
+                    alt={product.name}
+                />
+            </div>
             <h3 className="product-name">{product.name}</h3>
-            <img className="product-image" src={product.imageUrl} alt={product.name} />
-            <p className="product-description">{product.description}</p>
             <p className="product-price">${product.price}</p>
             <button
                 className="add-to-cart-btn"
