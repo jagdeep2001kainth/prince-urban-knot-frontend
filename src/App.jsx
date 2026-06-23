@@ -11,6 +11,7 @@ import AdminRoute from "./components/AdminRoute";
 import AdminBulkUploadV2 from "./pages/AdminBulkUploadV2";
 import AdminBulkUploadV3 from "./pages/AdminBulkUploadV3";
 import "./App.css";
+import ProductPage from "./pages/ProductPage";
 
 function App() {
     return (
@@ -31,6 +32,7 @@ function App() {
 <Route path="/admin/bulk-upload-v3" element={
     <PrivateRoute><AdminBulkUploadV3 /></PrivateRoute>
 } />
+<Route path="/product/:id" element={<ProductPage />} />
                 {/* <Route path="/admin/bulk-upload-v2" element={
     <PrivateRoute><AdminBulkUploadV2 /></PrivateRoute>
 } /> */}
