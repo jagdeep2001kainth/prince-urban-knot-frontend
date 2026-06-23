@@ -205,25 +205,25 @@
 
 /* Grid — 2 columns, cards at a natural tie-friendly size */
 .products-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 24px;
-  width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 220px);
+    gap: 24px;
+    justify-content: center;
+    width: 100%;
 }
 
-/* Card — fixed width feel, not stretched */
 .product-card {
-  background: var(--card-bg, #969494);
-  border-radius: 12px;
-  overflow: hidden;
-  border: 1px solid #978f8f;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background: var(--card-bg, #969494);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #978f8f;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 220px;
 }
-
 .product-card:hover {
   transform: translateY(-6px);
   box-shadow: 0 10px 25px rgba(0,0,0,0.15);
