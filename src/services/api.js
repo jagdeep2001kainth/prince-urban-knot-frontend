@@ -9,7 +9,7 @@ export const getProducts = async () => {
 };
 
 export const getProductsByCategory = async (category) => {
-    const response = await fetch(`${API_URL}/products?category=${encodeURIComponent(category)}`);
+    const response = await fetch(`${API_URL}/products/category/${encodeURIComponent(category)}`);
     return response.json();
 };
 
