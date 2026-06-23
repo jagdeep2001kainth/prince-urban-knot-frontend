@@ -8,6 +8,11 @@ export const getProducts = async () => {
     return response.json();
 };
 
+export const getProductsByCategory = async (category) => {
+    const response = await fetch(`${API_URL}/products?category=${encodeURIComponent(category)}`);
+    return response.json();
+};
+
 // Auth
 export const registerUser = async (data) => {
     const response = await fetch(`${API_URL}/auth/register`, {

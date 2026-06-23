@@ -1,6 +1,18 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../AuthContext";
 
+const CATEGORIES = [
+    { label: "Animal Print", value: "Animal Print Tie Set" },
+    { label: "Floral", value: "Floral Tie & Pocket Square Set" },
+    { label: "Jacquard Paisley", value: "Jacquard Paisley Tie Set" },
+    { label: "Jacquard Floral", value: "Jacquard Floral Tie Set" },
+    { label: "Jacquard Pattern", value: "Jacquard Pattern Tie Set" },
+    { label: "Designer", value: "Designer Pattern Tie Set" },
+    { label: "Paisley", value: "Paisley Tie & Pocket Square Set" },
+    { label: "Striped", value: "Striped Tie & Pocket Square Set" },
+    { label: "Solid", value: "Solid Color Tie & Pocket Square Set" },
+];
+
 const Navbar = () => {
     const { token, user, logout } = useAuth();
     const navigate = useNavigate();
@@ -47,14 +59,18 @@ const Navbar = () => {
                 </div>
             </nav>
 
-            {/* Bottom nav bar */}
+            {/* Category nav bar */}
             <div className="nav-categories">
-                <Link to="/">New</Link>
-                <Link to="/">Ties</Link>
-                <Link to="/">Bow Ties</Link>
-                <Link to="/">Pocket Squares</Link>
-                <Link to="/">Accessories</Link>
-                <Link to="/" className="nav-sale">Sale</Link>
+                <Link to="/" className="nav-category-link">All</Link>
+                {CATEGORIES.map(cat => (
+                    <Link
+                        key={cat.value}
+                        to={`/?category=${encodeURIComponent(cat.value)}`}
+                        className="nav-category-link"
+                    >
+                        {cat.label}
+                    </Link>
+                ))}
             </div>
         </header>
     );
